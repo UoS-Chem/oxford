@@ -1,0 +1,141 @@
+Quick Questions:
+Set 1
+
+1.	Suppose you have several hundred data files, each of which is formatted like this:
+2013-11-05,deer,5
+2013-11-05,rabbit,22
+2013-11-05,raccoon,7
+2013-11-06,rabbit,19
+2013-11-06,deer,2
+2013-11-06,fox,1
+2013-11-07,rabbit,18
+2013-11-07,bear,1
+
+We can use the command cut -d , -f 2 animals.txt | sort | uniq to produce the unique species in animals.txt. In order to avoid having to type out this series of commands every time, a scientist may choose to write a shell script instead.
+
+Write a shell script called species.sh that takes any number of filenames as command-line arguments, and uses a variation of the above command to print a list of the unique species appearing in each of those files separately.
+
+2.	In the molecules directory, imagine you have a shell script called script.sh containing the following commands:
+
+head -n $2 $1
+tail -n $3 $1
+
+            While you are in the molecules directory, you type the following command:
+bash script.sh '*.pdb' 1 1
+
+Which of the following outputs would you expect to see?
+1.	All of the lines between the first and the last lines of each file ending in .pdb in the molecules directory
+2.	The first and the last line of each file ending in .pdb in the molecules directory
+3.	The first and the last line of each file in the molecules directory
+4.	An error because of the quotes around *.pdb
+
+3.	Write a shell script that takes a directory name along with a filename extension as its arguments before printing out the name of the file with the least lines in that directory with that extension. 
+
+4.	Navigate back to the Data_Files_TMCS /molecules directory. Look at the three scripts below. What would they do when run as bash script1.sh *.pdb, bash script2.sh *.pdb, and bash script3.sh *.pdb .
+# Script 1
+echo *.*
+
+# Script 2
+for filename in $1 $2 $3
+do
+    cat $filename
+done
+
+# Script 3
+echo $@.pdb
+
+
+Set 2
+
+1.	Go to the Data_Files_TMCS/molecules directory.
+
+
+a)	What is the output of the following code?
+
+$ for datafile in *.pdb
+> do
+>    ls *.pdb
+> done
+
+b)	What  is the output of the following code?
+
+$ for datafile in *.pdb
+> do
+
+>	ls $datafile
+
+> done
+
+c)	What is the reason for the 2 different outputs?
+
+2.	Limiting Sets of Files
+
+
+d)	What would be the output of running the following loop in the Data_Files_TMCS/molecules directory?
+
+$ for filename in c*
+> do
+
+>    ls $filename
+
+> done
+
+3.	How would the output differ from using this command instead?
+
+$ for filename in *c*
+> do
+>    ls $filename
+> done
+
+4.	In the Data_Files_TMCS/molecules directory, what effect does this loop have?
+$ for alkanes in *.pdb
+>do
+>    echo $alkanes
+>    cat $alkanes > alkanes.pdb
+>done
+
+5.	In the same directory as Q4, what would be the output of the following loop?
+
+>for datafile in *.pdb
+>do
+>    cat $datafile >> all.pdb
+>done
+
+
+6.	Modify each of the files in Data_Files_TMCS /creatures, and then save a version of the original files, whilst naming the copies original-basilisk.dat and original-unicorn.dat.  Use something like the following
+
+$ for filename in *.dat
+> do
+>     cp $filename original-$filename
+> done
+
+1.	Explicitly write out the steps that this programme is taking
+
+
+Set 3
+
+1.	One way to check if a loop is doing what we’ve told it is to echo the commands it would run instead of actually running them.
+
+What is the difference between the two loops below, and which one would we want to run?
+
+# Version 1
+$ for datafile in *.pdb
+> do
+>   echo cat $datafile >> all.pdb
+> done
+# Version 2
+$ for datafile in *.pdb
+> do
+>   echo "cat $datafile >> all.pdb"
+> done
+
+2.	Suppose we want to set up a directory structure to organize some experiments measuring reaction rate constants with different compounds and different temperatures. What would be the result of the following nested loops:
+
+
+$ for species in cubane ethane methane
+> do
+>     for temperature in 25 30 37 40
+>     do
+>         mkdir $species-$temperature
+>     done
+> done
